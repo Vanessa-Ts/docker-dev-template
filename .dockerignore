@@ -54,8 +54,7 @@ k8s/
 *.yml
 
 # Tests
-tests/
-*.test
+
 
 # Environment
 .env
