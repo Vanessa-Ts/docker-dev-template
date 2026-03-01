@@ -1,9 +1,9 @@
 # docker-dev-template
 
-A minimal, production-oriented project template for building Python backend services with FastAPI, containerised with Docker and managed with `uv`. 
+A project template for building a simple Python web service with FastAPI, containerised with Docker and managed with `uv`. 
 
 
-#TODO: Update Readme
+
 
 ## Stack
 
@@ -20,11 +20,11 @@ A minimal, production-oriented project template for building Python backend serv
 
 
 ## Develop
+
+Use VSCode docker extension or 
+
 ```bash
 cp .env.example .env
 uv sync
 docker compose up --build
 ```
-
-## Prod
-`docker compose --profile prod up --build`
