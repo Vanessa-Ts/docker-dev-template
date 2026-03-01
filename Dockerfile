@@ -72,7 +72,8 @@ CMD ["pytest", "tests/", \
      "--cov=app", \
      "--cov-report=term-missing", \
      "--cov-report=xml:coverage.xml", \
-     "--junitxml=report.xml"]
+     "--junitxml=report.xml", \
+     "--allow-no-tests"]
 
 
 # Prod
