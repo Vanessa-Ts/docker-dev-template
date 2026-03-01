@@ -54,7 +54,7 @@ RUN uv sync --frozen --no-cache --group dev && \
 
 USER appuser
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["sleep", "infinity"]
 
 
 # Test

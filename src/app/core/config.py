@@ -7,14 +7,9 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=False,
     )
-
     app_name: str = "docker-dev-template"
     version: str = "0.1.0"
     environment: str = "development"
-
-    @property
-    def log_level(self) -> str:
-        return "DEBUG" if self.environment == "development" else "INFO"
-
+    log_level: str = "DEBUG"
 
 settings = Settings()
