@@ -1,5 +1,5 @@
 {
-    "name": "Docker Developmment Template",
+    "name": "Docker Development Template",
     "dockerComposeFile": ["../docker-compose.yml"],
     "service": "app",
     "workspaceFolder": "/app",
