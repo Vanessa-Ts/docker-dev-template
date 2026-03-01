@@ -1,7 +1,7 @@
 # docker-dev-template
 
-A project template for building a simple Python web service with FastAPI, containerised with Docker and managed with `uv`. 
-
+A project template for building a simple python web service with FastAPI, containerised with Docker and managed with `uv`. 
+Service is started on container startup (http://localhost:8000/).
 
 
 
