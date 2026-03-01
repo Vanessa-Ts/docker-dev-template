@@ -1,8 +1,6 @@
 # docker-dev-template
 
-A project template for building a simple python web service with FastAPI, containerised with Docker and managed with `uv`. 
-Service is started on container startup (http://localhost:8000/).
-
+A simple python template for building a containerized web service with FastAPI, docker compose and `uv` package manager. 
 
 
 ## Stack
@@ -12,6 +10,7 @@ Service is started on container startup (http://localhost:8000/).
 | FastAPI + Jinja2 | API framework + server-side UI |
 | uv | Dependency management |
 | Docker + Compose | Multi-stage build, local dev |
+| CI Pipeline | Test stage |
 | Pydantic Settings | Environment-aware config |
 | Black + isort + ruff | Formatting and linting |
 | mypy | Static type checking |
@@ -21,10 +20,12 @@ Service is started on container startup (http://localhost:8000/).
 
 ## Develop
 
-Use VSCode docker extension or 
-
+To start dev container use VSCode docker extension or docker compose command.
+Copy the 'env.template' and add the missing variables, then run 'uv sync'.
 ```bash
-cp .env.example .env
-uv sync
 docker compose up --build
+cp .env.template .env
+uv sync
 ```
+
+Start web service via launch.json or run 'main.py'.
