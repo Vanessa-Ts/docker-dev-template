@@ -21,14 +21,14 @@ Designed as a reusable starting point — production and infrastructure blocks a
 
 ## Quick Start
 
-# 1. Start dev container
+#### 1. Start dev container
 docker compose up --build
 
-# 2. Inside the container: create env file and sync deps
+#### 2. Inside the container: create env file and sync deps
 cp .env.example .env
 uv sync
 
-# 3. Start the web service via launch.json or manually
+#### 3. Start the web service via launch.json or manually
 python src/app/main.py
 
 Open the repo in VS Code and use "Reopen in Container" — the .devcontainer/devcontainer.json handles the rest. Start the web service via the provided launch.json debug configuration.
