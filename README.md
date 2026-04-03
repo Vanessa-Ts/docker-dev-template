@@ -2,7 +2,7 @@
 
 A containerized Python development template for building web services with FastAPI, Docker Compose multi-stage builds, and `uv` for dependency management.
 
-Designed as a reusable starting point — production and infrastructure blocks are scaffolded as commented sections, ready to uncomment when needed.
+Designed as a reusable starting point - production and infrastructure blocks are scaffolded as commented sections, ready to uncomment when needed.
 
 
 ## Stack
@@ -31,7 +31,7 @@ uv sync
 #### 3. Start the web service via launch.json or manually
 python src/app/main.py
 
-Open the repo in VS Code and use "Reopen in Container" — the .devcontainer/devcontainer.json handles the rest. Start the web service via the provided launch.json debug configuration.
+Open the repo in VS Code and use "Reopen in Container" - the .devcontainer/devcontainer.json handles the rest. Start the web service via the provided launch.json debug configuration.
 
 
 
@@ -51,7 +51,7 @@ Open the repo in VS Code and use "Reopen in Container" — the .devcontainer/dev
 
 Ready to enable when your project needs them:
 
-- **Production stage** in `Dockerfile` — uses `COPY --from=builder` for minimal image
-- **`app-prod` service** in `docker-compose.yml` — with resource limits and healthchecks
+- **Production stage** in `Dockerfile` - uses `COPY --from=builder` for minimal image
+- **`app-prod` service** in `docker-compose.yml` - with resource limits and healthchecks
 - **Postgres service** with healthcheck and persistent volume
 - **Docker networking** for multi-service communication
