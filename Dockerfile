@@ -1,4 +1,4 @@
-# Build
+# Base
 FROM python:3.11-slim AS base
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
@@ -26,7 +26,6 @@ ENV LANG=en_US.UTF-8 \
 WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
-COPY src/ ./src/
 
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
@@ -37,17 +36,20 @@ ENV UV_COMPILE_BYTECODE=1 \
 RUN uv venv -p /usr/local/bin/python3 /venv/ && \
     chown -R appuser:appuser /venv
 
-# Build
+# Builder
 FROM base AS builder
 
-RUN uv sync --frozen --no-install-project --no-dev --no-cache && \
-    uv sync --frozen --no-dev --no-cache
+COPY src/ ./src/
+
+RUN uv sync --frozen --no-dev --no-cache
 
 
 # ============================================================
 # Dev
 # ============================================================
 FROM base AS development
+
+COPY src/ ./src/
 
 RUN uv sync --frozen --no-cache --group dev && \
     uv cache clean
@@ -60,6 +62,7 @@ CMD ["sleep", "infinity"]
 # Test
 FROM base AS test
 
+COPY src/ ./src/
 COPY tests/ ./tests/
 
 RUN uv sync --frozen --no-cache --group test && \
@@ -75,14 +78,21 @@ CMD ["pytest", "tests/", \
      "--junitxml=report.xml"]
 
 
-# Prod
+# Prod - uncomment when ready to deploy
 # FROM base AS production
-# RUN uv sync --frozen --no-dev --no-cache && \
-#     uv cache clean
+#
+# # Copy pre-built venv from builder (deps cached separately from source)
+# COPY --from=builder /venv /venv
+# COPY src/ ./src/
+#
+# RUN uv cache clean
 #
 # USER appuser
 #
 # ENV PYTHONDONTWRITEBYTECODE=1 \
 #     PYTHONUNBUFFERED=1
 
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# EXPOSE 8000
+#
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

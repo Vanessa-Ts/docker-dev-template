@@ -1,6 +1,8 @@
 # docker-dev-template
 
-A simple python template for building a containerized web service with FastAPI, docker compose and `uv` package manager. 
+A containerized Python development template for building web services with FastAPI, Docker Compose multi-stage builds, and `uv` for dependency management.
+
+Designed as a reusable starting point — production and infrastructure blocks are scaffolded as commented sections, ready to uncomment when needed.
 
 
 ## Stack
@@ -10,7 +12,6 @@ A simple python template for building a containerized web service with FastAPI, 
 | FastAPI + Jinja2 | API framework + server-side UI |
 | uv | Dependency management |
 | Docker + Compose | Multi-stage build, local dev |
-| CI Pipeline | Test stage |
 | Pydantic Settings | Environment-aware config |
 | Black + isort + ruff | Formatting and linting |
 | mypy | Static type checking |
@@ -18,14 +19,39 @@ A simple python template for building a containerized web service with FastAPI, 
 
 
 
-## Develop
+## Quick Start
 
-To start dev container use VSCode docker extension or docker compose command.
-Copy the 'env.template' and add the missing variables, then run 'uv sync'.
-```bash
+# 1. Start dev container
 docker compose up --build
-cp .env.template .env
-uv sync
-```
 
-Start web service via launch.json or run 'main.py'.
+# 2. Inside the container: create env file and sync deps
+cp .env.example .env
+uv sync
+
+# 3. Start the web service via launch.json or manually
+python src/app/main.py
+
+Open the repo in VS Code and use "Reopen in Container" — the .devcontainer/devcontainer.json handles the rest. Start the web service via the provided launch.json debug configuration.
+
+
+
+## Docker Stages
+
+| Stage | Purpose | Used by |
+|---|---|---|
+| `base` | OS, python, uv, venv skeleton — no source, no deps | All stages |
+| `builder` | Installs production deps into `/venv` | `production` (via COPY --from) |
+| `development` | Full dev tooling, source mounted at runtime | `docker compose up` |
+| `test` | Runs pytest with coverage | CI pipeline |
+| `production` | Minimal image, pre-built venv | Uncomment when ready to deploy |
+
+
+
+## Scaffolded (Commented)
+
+Ready to enable when your project needs them:
+
+- **Production stage** in `Dockerfile` — uses `COPY --from=builder` for minimal image
+- **`app-prod` service** in `docker-compose.yml` — with resource limits and healthchecks
+- **Postgres service** with healthcheck and persistent volume
+- **Docker networking** for multi-service communication

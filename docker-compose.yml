@@ -9,8 +9,7 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - ./src:/app/src
-      - ./tests:/app/tests
+      - .:/app
     environment:
       - ENVIRONMENT=development
       - PYTHONUNBUFFERED=1
@@ -27,45 +26,44 @@ services:
     #   timeout: 3s
     #   retries: 3
     #   start_period: 10s
-    # networks:
-    #   -app-network
+ 
 
-  app-prod:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-    container_name: docker-dev-template-prod
-    image: docker-dev-template:prod
-    profiles: ["prod"]
-    security_opt:
-      - no-new-privileges:true
-    environment:
-      - ENVIRONMENT=production
-      - PYTHONUNBUFFERED=1
-    env_file:
-      - .env
-    ports:
-      - "8001:8000"
-    restart: unless-stopped
-    # healthcheck:
-    #   test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
-    #   interval: 30s
-    #   timeout: 5s
-    #   retries: 3
-    #   start_period: 10s
-    # deploy:
-    #   resources:    # Resource limits
-    #     limits:
-    #       cpus: '1.0'
-    #       memory: 512M
-    #     reservations:
-    #       cpus: '0.5'
-    #       memory: 256M
-    # depends_on:
-    #   - postgres
-    # networks:
-    #  - app-network
+  # app-prod:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: production
+  #   container_name: docker-dev-template-prod
+  #   image: docker-dev-template:prod
+  #   profiles: ["prod"]
+  #   security_opt:
+  #     - no-new-privileges:true
+  #   environment:
+  #     - ENVIRONMENT=production
+  #     - PYTHONUNBUFFERED=1
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8001:8000"
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+  #     interval: 30s
+  #     timeout: 5s
+  #     retries: 3
+  #     start_period: 10s
+  #   deploy:
+  #     resources:    # Resource limits
+  #       limits:
+  #         cpus: '1.0'
+  #         memory: 512M
+  #       reservations:
+  #         cpus: '0.5'
+  #         memory: 256M
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #    - app-network
 
   # postgres: # Example: add database service
   #   image: postgres:15-alpine
